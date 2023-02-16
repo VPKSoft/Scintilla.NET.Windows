@@ -17,8 +17,8 @@ jobs:
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
     env:
-      Solution_Name: Scintilla.NET.Abstractions.sln
-      App_Project_Directory: Scintilla.NET.Abstractions
+      Solution_Name: Scintilla.NET.Windows.sln
+      App_Project_Directory: Scintilla.NET.Windows
       App_Project_Path: Scintilla.NET.Windows\Scintilla.NET.Windows.csproj
       NUGET_APIKEY: ${{ secrets.NUGET_APIKEY }}
       NUGETAPI: ${{ secrets.NUGETAPI }}      
