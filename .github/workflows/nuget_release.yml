@@ -18,8 +18,8 @@ jobs:
 
     env:
       Solution_Name: Scintilla.NET.Windows.sln
-      App_Project_Directory: Scintilla.NET.Windows
-      App_Project_Path: Scintilla.NET.Windows\Scintilla.NET.Windows\Scintilla.NET.WinForms\Scintilla.NET.WinForms.csproj
+      App_Project_Directory: Scintilla.NET.Windows                        
+      App_Project_Path: Scintilla.NET.Windows\Scintilla.NET.WinForms\Scintilla.NET.WinForms.csproj
       NUGET_APIKEY: ${{ secrets.NUGET_APIKEY }}
       NUGETAPI: ${{ secrets.NUGETAPI }}      
       GH_PACKAGES_APIKEY: ${{ secrets.GH_PACKAGES_APIKEY }}
