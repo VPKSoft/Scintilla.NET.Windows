@@ -29,12 +29,17 @@
 	</PropertyGroup>
 	<PropertyGroup>
 		<DefineConstants>SCINTILLA5</DefineConstants>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Update="Scintilla.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Include="..\..\README.md">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
 		<None Include="..\vpksoft_logo.png">
 		  <Pack>True</Pack>
 		  <PackagePath>\</PackagePath>
