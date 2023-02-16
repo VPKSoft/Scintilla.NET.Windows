@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<DocumentationFile>bin\$(Configuration)\Scintilla.NET.EtoForms.Wpf.xml</DocumentationFile>
+		<OutputType>Library</OutputType>
+		<Title>Scintilla.NET.EtoForms</Title>
+		<Company>VPKSoft</Company>
+		<Description>Eto.Forms wrapper for Scintilla control.</Description>
+		<Copyright>Copyright © VPKSoft 2023</Copyright>
+		<BuildPlatform>Windows</BuildPlatform>
+		<PackageProjectUrl>https://github.com/VPKSoft/ScintillaNET</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/VPKSoft/ScintillaNET</RepositoryUrl>
+		<LangVersion>latest</LangVersion>
+		<TargetFrameworks>net6.0-windows;net7.0-windows</TargetFrameworks>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Configurations>Debug;Release;DebugLinux;ReleaseLinux</Configurations>
+		<RootNamespace>ScintillaNet.EtoForms.Wpf</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Eto.Platform.Wpf" Version="2.7.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Scintilla.NET.EtoForms.WinForms\Scintilla.NET.EtoForms.WinForms.csproj" />
+	</ItemGroup>
+</Project>

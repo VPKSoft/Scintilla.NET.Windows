@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net6-windows;net7-windows</TargetFrameworks>
+		<AssemblyTitle>Scintilla.NET.WinForms</AssemblyTitle>
+		<PackageId>Scintilla.NET.WinForms</PackageId>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/VPKSoft/Scintilla.NET.Windows</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/VPKSoft/Scintilla.NET.Windows</RepositoryUrl>
+		<Description>Source Editing Component based on Scintilla 5 series.</Description>
+		<PackageIcon>vpksoft_logo.png</PackageIcon>
+		<Copyright>Copyright (c) 2018, Jacob Slusser. All rights reserved. VPKSoft, cyber960 2023.</Copyright>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>ScintillaNET Scintilla Editor</PackageTags>
+		<PackageReleaseNotes>See: https://github.com/VPKSoft/Scintilla.NET.Windows</PackageReleaseNotes>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<Version>1.0.0.5320</Version>
+		<DocumentationFile>bin\$(Configuration)\Scintilla.NET.xml</DocumentationFile>
+		<UseWindowsForms>true</UseWindowsForms>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<Platforms>AnyCPU</Platforms>
+		<AssemblyName>Scintilla.NET.WinForms</AssemblyName>
+		<RootNamespace>ScintillaNet.WinForms</RootNamespace>
+		<Authors>Jacob Slusser, VPKSoft, cyber960</Authors>
+	</PropertyGroup>
+	<PropertyGroup>
+		<LangVersion>10</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup>
+		<DefineConstants>SCINTILLA5</DefineConstants>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Update="Scintilla.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\vpksoft_logo.png">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
+		<None Include="Scintilla.NET.Winforms.targets">
+			<PackagePath>build\</PackagePath>
+			<Pack>true</Pack>
+		</None>
+		<None Include="Lexilla.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackagePath>build\</PackagePath>
+			<Pack>true</Pack>
+			<Visible>False</Visible>
+		</None>
+		<None Include="Scintilla.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackagePath>build\</PackagePath>
+			<Pack>true</Pack>
+			<Visible>False</Visible>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Scintilla.NET.Abstractions" Version="1.0.2" />
+	</ItemGroup>
+</Project>
