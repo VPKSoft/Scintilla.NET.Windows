@@ -1,26 +1,23 @@
-﻿using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using Eto.Wpf.Forms;
+﻿using System.Text;
+using System.Windows.Forms.Integration;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using ScintillaNet.Abstractions;
 using ScintillaNet.Abstractions.Enumerations;
 using ScintillaNet.Abstractions.Interfaces;
 using ScintillaNet.Abstractions.Interfaces.Methods;
 using ScintillaNet.Abstractions.Structs;
-using ScintillaNet.EtoForms.WinForms;
 using ScintillaNet.WinForms;
-using ScintillaNet.WinForms.Collections;
 using ScintillaNet.WinForms.EventArguments;
-using Control = Eto.Forms.Control;
-using Lexilla = ScintillaNet.EtoForms.WinForms.Lexilla;
+using ScintillaNet.Wpf.Collections;
 using TabDrawMode = ScintillaNet.Abstractions.Enumerations.TabDrawMode;
+using Color = System.Windows.Media.Color;
 
-namespace ScintillaNet.EtoForms.Wpf;
+
+namespace ScintillaNet.Wpf;
 
 /// <summary>
 /// Scintilla control handler for WPF.
-/// Implements the <see cref="Eto.Wpf.Forms.WindowsFormsHostHandler{TControl, TWidget, TCallback}" />
-/// Implements the <see cref="IScintillaControl" />
 /// Implements the <see cref="IScintillaApi{TMarkers,TStyles,TIndicators,TLines,TMargins,TSelections,TMarker,TStyle,TIndicator,TLine,TMargin,TSelection,TBitmap,TColor}" />
 /// Implements the <see cref="IScintillaProperties{TColor}" />
 /// Implements the <see cref="IScintillaCollectionProperties{TMarkers,TStyles,TIndicators,TLines,TMargins,TSelections,TMarker,TStyle,TIndicator,TLine,TMargin,TSelection,TBitmap,TColor}" />
@@ -32,23 +29,23 @@ namespace ScintillaNet.EtoForms.Wpf;
 /// <seealso cref="IScintillaCollectionProperties{TMarkers,TStyles,TIndicators,TLines,TMargins,TSelections,TMarker,TStyle,TIndicator,TLine,TMargin,TSelection,TBitmap,TColor}" />
 /// <seealso cref="IScintillaMethods" />
 /// <seealso cref="IScintillaEvents{TKeys,TAutoCSelectionEventArgs,TBeforeModificationEventArgs,TModificationEventArgs,TChangeAnnotationEventArgs,TCharAddedEventArgs,TDoubleClickEventArgs,TDwellEventArgs,TCallTipClickEventArgs,THotspotClickEventArgs,TIndicatorClickEventArgs,TIndicatorReleaseEventArgs,TInsertCheckEventArgs,TMarginClickEventArgs,TNeedShownEventArgs,TStyleNeededEventArgs,TUpdateUiEventArgs,TScNotificationEventArgs,TAutoCSelectionChangeEventArgs}" />
-public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForms, ScintillaControl, Control.ICallback>, IScintillaControl,
-    IScintillaWinForms
+public class Scintilla: WindowsFormsHost,
+    IScintillaWpf
 {
     readonly IntPtr editor;
-    private readonly ScintillaWinForms nativeControl;
+    private readonly WinForms.Scintilla nativeControl;
     
     /// <summary>
-    /// Initializes a new instance of the <see cref="ScintillaControlHandler"/> class.
+    /// Initializes a new instance of the <see cref="Scintilla"/> class.
     /// </summary>
-    public ScintillaControlHandler()
+    public Scintilla()
     {
-        nativeControl = new ScintillaWinForms();
-        WinFormsControl = nativeControl;
+
+        nativeControl = new global::ScintillaNet.WinForms.Scintilla { Dock = DockStyle.Fill, };
+        Child = nativeControl;
         editor = nativeControl.SciPointer;
-        NativeControl = nativeControl;
     }
-    
+
     private static Lexilla? lexillaInstance;
 
     /// <summary>
@@ -64,34 +61,34 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
         }
     }
 
-    /// <inheritdoc cref="IScintillaControl.SetParameter"/>
+    /// <inheritdoc cref="IScintillaApi.SetParameter"/>
     public IntPtr SetParameter(int message, IntPtr wParam, IntPtr lParam)
     {
-        return WinFormsControl.DirectMessage(editor, message, wParam, lParam);
+        return nativeControl.DirectMessage(editor, message, wParam, lParam);
     }
 
-    /// <inheritdoc cref="IScintillaControl.DirectMessage(int)"/>
+    /// <inheritdoc cref="IScintillaApi.DirectMessage(int)"/>
     public IntPtr DirectMessage(int msg)
     {
-        return WinFormsControl.DirectMessage(msg, IntPtr.Zero, IntPtr.Zero);
+        return nativeControl.DirectMessage(msg, IntPtr.Zero, IntPtr.Zero);
     }
 
-    /// <inheritdoc cref="IScintillaControl.DirectMessage(int, IntPtr)"/>
+    /// <inheritdoc cref="IScintillaApi.DirectMessage(int, IntPtr)"/>
     public IntPtr DirectMessage(int msg, IntPtr wParam)
     {
-        return WinFormsControl.DirectMessage(msg, wParam, IntPtr.Zero);
+        return nativeControl.DirectMessage(msg, wParam, IntPtr.Zero);
     }
 
-    /// <inheritdoc cref="IScintillaControl.DirectMessage(int, IntPtr, IntPtr)"/>
+    /// <inheritdoc cref="IScintillaApi.DirectMessage(int, IntPtr, IntPtr)"/>
     public IntPtr DirectMessage(int msg, IntPtr wParam, IntPtr lParam)
     {
-        return WinFormsControl.DirectMessage(msg, wParam, lParam);
+        return nativeControl.DirectMessage(msg, wParam, lParam);
     }
 
-    /// <inheritdoc cref="IScintillaControl.DirectMessage(int, IntPtr, IntPtr)"/>
+    /// <inheritdoc cref="IScintillaApi.DirectMessage(int, IntPtr, IntPtr)"/>
     public IntPtr DirectMessage(IntPtr sciPtr, int msg, IntPtr wParam, IntPtr lParam)
     {
-        return WinFormsControl.DirectMessage(sciPtr, msg, wParam, lParam);
+        return nativeControl.DirectMessage(sciPtr, msg, wParam, lParam);
     }
 
     /// <inheritdoc />
@@ -103,7 +100,7 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     /// <param name="marker">The zero-based index to remove from all lines, or -1 to remove all markers from all lines.</param>
     public void MarkerDeleteAll(int marker)
     {
-        WinFormsControl.MarkerDeleteAll(marker);
+        nativeControl.MarkerDeleteAll(marker);
     }
 
     /// <inheritdoc />
@@ -116,7 +113,7 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     public int MarkerLineFromHandle(MarkerHandle markerHandle) => nativeControl.MarkerLineFromHandle(markerHandle);
 
     /// <inheritdoc />
-    public void MultiEdgeAddLine(int column, Color edgeColor) => nativeControl.MultiEdgeAddLine(column, edgeColor);
+    public void MultiEdgeAddLine(int column, Color edgeColor) => nativeControl.MultiEdgeAddLine(column, WpfHelpers.ToWinForms(edgeColor));
 
     /// <inheritdoc />
     public void MultiEdgeClearAll() => nativeControl.MultiEdgeClearAll();
@@ -146,9 +143,6 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     public void Redo() => nativeControl.Redo();
 
     /// <inheritdoc />
-    public void RegisterRgbaImage(int type, Image image) => nativeControl.RegisterRgbaImage(type, image);
-
-    /// <inheritdoc />
     public void ReleaseDocument(Document document) => nativeControl.ReleaseDocument(document);
 
     /// <inheritdoc />
@@ -176,10 +170,10 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     public void SelectAll() => nativeControl.SelectAll();
 
     /// <inheritdoc />
-    public void SetAdditionalSelBack(Color color) => nativeControl.SetAdditionalSelBack(color);
+    public void SetAdditionalSelBack(Color color) => nativeControl.SetAdditionalSelBack(WpfHelpers.ToWinForms(color));
 
     /// <inheritdoc />
-    public void SetAdditionalSelFore(Color color) => nativeControl.SetAdditionalSelFore(color);
+    public void SetAdditionalSelFore(Color color) => nativeControl.SetAdditionalSelFore(WpfHelpers.ToWinForms(color));
 
     /// <inheritdoc />
     public void SetEmptySelection(int pos) => nativeControl.SetEmptySelection(pos);
@@ -196,11 +190,11 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     public void SetFoldFlags(FoldFlags flags) => nativeControl.SetFoldFlags(flags);
 
     /// <inheritdoc />
-    public void SetFoldMarginColor(bool use, Color color) => nativeControl.SetFoldMarginColor(use, color);
+    public void SetFoldMarginColor(bool use, Color color) => nativeControl.SetFoldMarginColor(use, WpfHelpers.ToWinForms(color));
 
     /// <inheritdoc />
     public void SetFoldMarginHighlightColor(bool use, Color color) =>
-        nativeControl.SetFoldMarginHighlightColor(use, color);
+        nativeControl.SetFoldMarginHighlightColor(use, WpfHelpers.ToWinForms(color));
 
     /// <inheritdoc />
     public void SetIdentifiers(int style, string identifiers) => nativeControl.SetIdentifiers(style, identifiers);
@@ -221,10 +215,10 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     public void SetSelection(int caret, int anchor) => nativeControl.SetSelection(caret, anchor);
 
     /// <inheritdoc />
-    public void SetSelectionBackColor(bool use, Color color) => nativeControl.SetSelectionBackColor(use, color);
+    public void SetSelectionBackColor(bool use, Color color) => nativeControl.SetSelectionBackColor(use, WpfHelpers.ToWinForms(color));
 
     /// <inheritdoc />
-    public void SetSelectionForeColor(bool use, Color color) => nativeControl.SetSelectionForeColor(use, color);
+    public void SetSelectionForeColor(bool use, Color color) => nativeControl.SetSelectionForeColor(use, WpfHelpers.ToWinForms(color));
 
     /// <inheritdoc />
     public void SetStyling(int length, int style) => nativeControl.SetStyling(length, style);
@@ -233,10 +227,10 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     public void SetTargetRange(int start, int end) => nativeControl.SetTargetRange(start, end);
 
     /// <inheritdoc />
-    public void SetWhitespaceBackColor(bool use, Color color) => nativeControl.SetWhitespaceBackColor(use, color);
+    public void SetWhitespaceBackColor(bool use, Color color) => nativeControl.SetWhitespaceBackColor(use, WpfHelpers.ToWinForms(color));
 
     /// <inheritdoc />
-    public void SetWhitespaceForeColor(bool use, Color color) => nativeControl.SetWhitespaceForeColor(use, color);
+    public void SetWhitespaceForeColor(bool use, Color color) => nativeControl.SetWhitespaceForeColor(use, WpfHelpers.ToWinForms(color));
 
     /// <inheritdoc />
     public void ShowLines(int lineStart, int lineEnd) => nativeControl.ShowLines(lineStart, lineEnd);
@@ -295,10 +289,10 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     public void ClearRepresentation(string encodedString) => nativeControl.ClearRepresentation(encodedString);
 
     /// <inheritdoc />
-    public Encoding Encoding => WinFormsControl.Encoding;
+    public Encoding Encoding => nativeControl.Encoding;
 
     /// <inheritdoc />
-    public int TextLength => WinFormsControl.TextLength;
+    public int TextLength => nativeControl.TextLength;
 
     /// <inheritdoc />
     public string GetTag(int tagNumber) => nativeControl.GetTag(tagNumber);
@@ -363,9 +357,6 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     public void AppendText(string text) => nativeControl.AppendText(text);
 
     /// <inheritdoc />
-    public void AssignCmdKey(Keys keyDefinition, Command sciCommand) => nativeControl.AssignCmdKey(keyDefinition, sciCommand);
-
-    /// <inheritdoc />
     public void AutoCCancel() => nativeControl.AutoCCancel();
 
     /// <inheritdoc />
@@ -399,7 +390,7 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     public void CallTipCancel() => nativeControl.CallTipCancel();
 
     /// <inheritdoc />
-    public void CallTipSetForeHlt(Color color) => nativeControl.CallTipSetForeHlt(color);
+    public void CallTipSetForeHlt(Color color) => nativeControl.CallTipSetForeHlt(WpfHelpers.ToWinForms(color));
 
     /// <inheritdoc />
     public void CallTipSetHlt(int hlStart, int hlEnd) => nativeControl.CallTipSetHlt(hlStart, hlEnd);
@@ -430,9 +421,6 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
 
     /// <inheritdoc />
     public void ClearAll() => nativeControl.ClearAll();
-
-    /// <inheritdoc />
-    public void ClearCmdKey(Keys keyDefinition) => nativeControl.ClearCmdKey(keyDefinition);
 
     /// <inheritdoc />
     public void ClearAllCmdKeys() => nativeControl.ClearAllCmdKeys();
@@ -560,9 +548,6 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     public ILexilla Lexilla => LexillaSingleton;
 
     /// <inheritdoc />
-    public object NativeControl { get; }
-
-    /// <inheritdoc />
     public event EventHandler<EventArgs>? AutoCCancelled
     {
         add => nativeControl.AutoCCancelled += value;
@@ -654,32 +639,142 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
         remove => nativeControl.DwellStart -= value;
     }
 
+    private readonly
+        List<KeyValuePair<EventHandler<HotspotClickEventArgs<Key>>,
+            EventHandler<HotspotClickEventArgs<Keys>>>?>
+        hotspotClickEventHandlers = new();
+
     /// <inheritdoc />
-    public event EventHandler<HotspotClickEventArgs<Keys>>? HotspotClick
+    public event EventHandler<HotspotClickEventArgs<Key>>? HotspotClick
     {
-        add => nativeControl.HotspotClick += value;
-        remove => nativeControl.HotspotClick -= value;
+        add
+        {
+            void NativeControlOnHotspotClick(object? sender, HotspotClickEventArgs<Keys> e)
+            {
+                var key = KeyInterop.KeyFromVirtualKey((int)e.Modifiers);
+                value(nativeControl, new HotspotClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.Position));
+            }
+
+            if (value != null)
+            {
+                nativeControl.HotspotClick += NativeControlOnHotspotClick;
+
+                hotspotClickEventHandlers.Add(
+                    new KeyValuePair<EventHandler<HotspotClickEventArgs<Key>>,
+                        EventHandler<HotspotClickEventArgs<Keys>>>(value, NativeControlOnHotspotClick));
+            }
+        }
+        remove
+        {
+            var handlers = hotspotClickEventHandlers.FirstOrDefault(f => f!.Value.Key == value);
+
+            if (handlers != null)
+            {
+                hotspotClickEventHandlers.RemoveAll(f => f!.Value.Key == value);
+                nativeControl.HotspotClick -= handlers.Value.Value;
+            }
+        }
+    }
+
+
+    /// <inheritdoc />
+    public event EventHandler<HotspotClickEventArgs<Key>>? HotspotDoubleClick
+    {
+        add
+        {
+            void NativeControlOnHotspotClick(object? sender, HotspotClickEventArgs<Keys> e)
+            {
+                var key = KeyInterop.KeyFromVirtualKey((int)e.Modifiers);
+                value(nativeControl, new HotspotClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.Position));
+            }
+
+            if (value != null)
+            {
+                nativeControl.HotspotDoubleClick += NativeControlOnHotspotClick;
+
+                hotspotClickEventHandlers.Add(
+                    new KeyValuePair<EventHandler<HotspotClickEventArgs<Key>>,
+                        EventHandler<HotspotClickEventArgs<Keys>>>(value, NativeControlOnHotspotClick));
+            }
+        }
+        remove
+        {
+            var handlers = hotspotClickEventHandlers.FirstOrDefault(f => f!.Value.Key == value);
+
+            if (handlers != null)
+            {
+                hotspotClickEventHandlers.RemoveAll(f => f!.Value.Key == value);
+                nativeControl.HotspotDoubleClick -= handlers.Value.Value;
+            }
+        }
     }
 
     /// <inheritdoc />
-    public event EventHandler<HotspotClickEventArgs<Keys>>? HotspotDoubleClick
+    public event EventHandler<HotspotClickEventArgs<Key>>? HotspotReleaseClick
     {
-        add => nativeControl.HotspotDoubleClick += value;
-        remove => nativeControl.HotspotDoubleClick -= value;
+        add
+        {
+            void Handler(object? sender, HotspotClickEventArgs<Keys> e)
+            {
+                var key = KeyInterop.KeyFromVirtualKey((int)e.Modifiers);
+                value(nativeControl, new HotspotClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.Position));
+            }
+
+            if (value != null)
+            {
+                nativeControl.HotspotReleaseClick += Handler;
+
+                hotspotClickEventHandlers.Add(
+                    new KeyValuePair<EventHandler<HotspotClickEventArgs<Key>>,
+                        EventHandler<HotspotClickEventArgs<Keys>>>(value, Handler));
+            }
+        }
+        remove
+        {
+            var handlers = hotspotClickEventHandlers.FirstOrDefault(f => f!.Value.Key == value);
+
+            if (handlers != null)
+            {
+                hotspotClickEventHandlers.RemoveAll(f => f!.Value.Key == value);
+                nativeControl.HotspotReleaseClick -= handlers.Value.Value;
+            }
+        }
     }
 
-    /// <inheritdoc />
-    public event EventHandler<HotspotClickEventArgs<Keys>>? HotspotReleaseClick
-    {
-        add => nativeControl.HotspotReleaseClick += value;
-        remove => nativeControl.HotspotReleaseClick -= value;
-    }
+    private readonly
+        List<KeyValuePair<EventHandler<IndicatorClickEventArgs<Key>>,
+            EventHandler<IndicatorClickEventArgs<Keys>>>?>
+       indicatorClickEventHandlers= new();
 
     /// <inheritdoc />
-    public event EventHandler<IndicatorClickEventArgs>? IndicatorClick
+    public event EventHandler<IndicatorClickEventArgs<Key>>? IndicatorClick
     {
-        add => nativeControl.IndicatorClick += value;
-        remove => nativeControl.IndicatorClick -= value;
+        add
+        {
+            void Handler(object? sender, IndicatorClickEventArgs<Keys> e)
+            {
+                var key = KeyInterop.KeyFromVirtualKey((int)e.Modifiers);
+                value(nativeControl, new IndicatorClickEventArgs<Key>(nativeControl, key));
+            }
+
+            if (value != null)
+            {
+                nativeControl.IndicatorClick += Handler;
+
+                indicatorClickEventHandlers.Add(
+                    new KeyValuePair<EventHandler<IndicatorClickEventArgs<Key>>, EventHandler<IndicatorClickEventArgs<Keys>>>(value, Handler));
+            }
+        }
+        remove
+        {
+            var handlers = indicatorClickEventHandlers.FirstOrDefault(f => f!.Value.Key == value);
+
+            if (handlers != null)
+            {
+                indicatorClickEventHandlers.RemoveAll(f => f!.Value.Key == value);
+                nativeControl.IndicatorClick -= handlers.Value.Value;
+            }
+        }
     }
 
     /// <inheritdoc />
@@ -704,17 +799,76 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     }
 
     /// <inheritdoc />
-    public event EventHandler<MarginClickEventArgs>? MarginClick
+    public event EventHandler<MarginClickEventArgs<Key>>? MarginClick
     {
-        add => nativeControl.MarginClick += value;
-        remove => nativeControl.MarginClick -= value;
+        add
+        {
+            void Handler(object? sender, MarginClickEventArgs<Keys> e)
+            {
+                var key = KeyInterop.KeyFromVirtualKey((int)e.Modifiers);
+                value(nativeControl,
+                    new MarginClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.Position,
+                        e.Margin));
+            }
+
+            if (value != null)
+            {
+                nativeControl.MarginClick += Handler;
+
+                marginRightClickEventHandlers.Add(
+                    new KeyValuePair<EventHandler<MarginClickEventArgs<Key>>,
+                        EventHandler<MarginClickEventArgs<Keys>>>(value, Handler));
+            }
+        }
+        remove
+        {
+            var handlers = marginRightClickEventHandlers.FirstOrDefault(f => f!.Value.Key == value);
+
+            if (handlers != null)
+            {
+                marginRightClickEventHandlers.RemoveAll(f => f!.Value.Key == value);
+                nativeControl.MarginClick -= handlers.Value.Value;
+            }
+        }
     }
 
+    private readonly
+        List<KeyValuePair<EventHandler<MarginClickEventArgs<Key>>,
+            EventHandler<MarginClickEventArgs<Keys>>>?>
+        marginRightClickEventHandlers = new();
+
     /// <inheritdoc />
-    public event EventHandler<MarginClickEventArgs>? MarginRightClick
+    public event EventHandler<MarginClickEventArgs<Key>>? MarginRightClick
     {
-        add => nativeControl.MarginRightClick += value;
-        remove => nativeControl.MarginRightClick -= value;
+        add
+        {
+            void Handler(object? sender, MarginClickEventArgs<Keys> e)
+            {
+                var key = KeyInterop.KeyFromVirtualKey((int)e.Modifiers);
+                value(nativeControl,
+                    new MarginClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.Position,
+                        e.Margin));
+            }
+
+            if (value != null)
+            {
+                nativeControl.MarginRightClick += Handler;
+
+                marginRightClickEventHandlers.Add(
+                    new KeyValuePair<EventHandler<MarginClickEventArgs<Key>>,
+                        EventHandler<MarginClickEventArgs<Keys>>>(value, Handler));
+            }
+        }
+        remove
+        {
+            var handlers = marginRightClickEventHandlers.FirstOrDefault(f => f!.Value.Key == value);
+
+            if (handlers != null)
+            {
+                marginRightClickEventHandlers.RemoveAll(f => f!.Value.Key == value);
+                nativeControl.MarginRightClick -= handlers.Value.Value;
+            }
+        }
     }
 
     /// <inheritdoc />
@@ -787,44 +941,97 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
         remove => nativeControl.ZoomChanged -= value;
     }
 
+    private MarkerCollection? markers;
+    private StyleCollection? styles;
+    private IndicatorCollection? indicators;
+    private LineCollection? lineCollection;
+    private MarginCollection? margins;
+    private SelectionCollection? selections;
+
     /// <inheritdoc cref="Scintilla.Markers" />
-    public MarkerCollection Markers => nativeControl.Markers;
+    public MarkerCollection Markers
+    {
+        get
+        {
+            markers ??= new MarkerCollection(nativeControl);
+            return markers;
+        }
+    }
 
     /// <summary>
     /// Gets a collection representing style definitions in a <see cref="T:Scintilla.NET.Abstractions.IScintillaApi`15" /> control.
     /// </summary>
     /// <value>The styles.</value>
-    public StyleCollection Styles => nativeControl.Styles;
+    public StyleCollection Styles
+    {
+        get
+        {
+            styles ??= new StyleCollection(nativeControl);
+            return styles;
+        }
+    }
 
     /// <summary>
     /// Gets a collection of objects for working with indicators.
     /// </summary>
     /// <value>The indicators.</value>
-    public IndicatorCollection Indicators => nativeControl.Indicators;
+    public IndicatorCollection Indicators
+    {
+        get
+        {
+            indicators ??= new IndicatorCollection(nativeControl, nativeControl.Lines);
+            return indicators;
+        }
+    }
 
     /// <summary>
     /// Gets a collection representing lines of text in the <see cref="T:Scintilla.NET.Abstractions.IScintillaApi`15" /> control interface.
     /// </summary>
     /// <value>The lines.</value>
-    public LineCollection Lines => nativeControl.Lines;
+    public LineCollection Lines
+    {
+        get
+        {
+            lineCollection ??= new LineCollection(nativeControl, nativeControl.Styles, nativeControl.Markers);
+            return lineCollection;
+        }
+    }
 
     /// <summary>
     /// Gets a collection representing margins in a <see cref="T:Scintilla.NET.Abstractions.IScintillaApi`15" /> control interface.
     /// </summary>
     /// <value>The margins.</value>
-    public MarginCollection Margins => nativeControl.Margins;
+    public MarginCollection Margins
+    {
+        get
+        {
+            margins ??= new MarginCollection(nativeControl);
+            return margins;
+        }
+    }
 
     /// <summary>
     /// Gets a collection representing multiple selections in a <see cref="T:Scintilla.NET.Abstractions.IScintillaApi`15" /> control interface.
     /// </summary>
     /// <value>The selections.</value>
-    public SelectionCollection Selections => nativeControl.Selections;
+    public SelectionCollection Selections
+    {
+        get
+        {
+            selections ??= new SelectionCollection(nativeControl, nativeControl.Lines);
+            return selections;
+        }
+    }
 
     /// <inheritdoc />
     public BiDirectionalDisplayType BiDirectionality { get => nativeControl.BiDirectionality; set => nativeControl.BiDirectionality = value; }
 
     /// <inheritdoc />
-    public Color AdditionalCaretForeColor { get => nativeControl.AdditionalCaretForeColor; set => nativeControl.AdditionalCaretForeColor = value; }
+    public Color AdditionalCaretForeColor 
+    { 
+        get => WpfHelpers.FromWinForms(nativeControl.AdditionalCaretForeColor) ;
+        set => nativeControl.AdditionalCaretForeColor = WpfHelpers.ToWinForms(value);
+    }
 
     /// <inheritdoc />
     public bool AdditionalCaretsBlink { get => nativeControl.AdditionalCaretsBlink; set => nativeControl.AdditionalCaretsBlink = value; }
@@ -914,10 +1121,18 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     public bool CanUndo => nativeControl.CanUndo;
 
     /// <inheritdoc />
-    public Color CaretForeColor { get => nativeControl.CaretForeColor; set => nativeControl.CaretForeColor = value; }
+    public Color CaretForeColor
+    {
+        get => WpfHelpers.FromWinForms(nativeControl.CaretForeColor); 
+        set => nativeControl.CaretForeColor = WpfHelpers.ToWinForms(value);
+    }
 
     /// <inheritdoc />
-    public Color CaretLineBackColor { get => nativeControl.CaretLineBackColor; set => nativeControl.CaretLineBackColor = value; }
+    public Color CaretLineBackColor
+    {
+        get => WpfHelpers.FromWinForms(nativeControl.CaretLineBackColor); 
+        set => nativeControl.CaretLineBackColor = WpfHelpers.ToWinForms(value);
+    }
 
     /// <inheritdoc />
     public int CaretLineBackColorAlpha { get => nativeControl.CaretLineBackColorAlpha; set => nativeControl.CaretLineBackColorAlpha = value; }
@@ -953,7 +1168,11 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
     public int DistanceToSecondaryStyles => nativeControl.DistanceToSecondaryStyles;
 
     /// <inheritdoc />
-    public Color EdgeColor { get => nativeControl.EdgeColor; set => nativeControl.EdgeColor = value; }
+    public Color EdgeColor
+    {
+        get => WpfHelpers.FromWinForms(nativeControl.EdgeColor); 
+        set => nativeControl.EdgeColor = WpfHelpers.ToWinForms(value);
+    }
 
     /// <inheritdoc />
     public int EdgeColumn { get => nativeControl.EdgeColumn; set => nativeControl.EdgeColumn = value; }
@@ -1163,4 +1382,25 @@ public class ScintillaControlHandler :  WindowsFormsHostHandler<ScintillaWinForm
 
     /// <inheritdoc />
     public int Zoom { get => nativeControl.Zoom; set => nativeControl.Zoom = value; }
+
+    /// <inheritdoc />
+    public void AssignCmdKey(Key keyDefinition, Command sciCommand)
+    {
+        var key = KeyInterop.VirtualKeyFromKey(keyDefinition);
+        nativeControl.AssignCmdKey((Keys)key, sciCommand);
+    }
+
+    /// <inheritdoc />
+    public void ClearCmdKey(Key keyDefinition)
+    {
+        var key = KeyInterop.VirtualKeyFromKey(keyDefinition);
+        nativeControl.ClearCmdKey((Keys)key);
+    } 
+
+    /// <inheritdoc />
+    public void RegisterRgbaImage(int type, BitmapImage image)
+    {
+        using var bitmap = WpfHelpers.BitmapImage2Bitmap(image);
+        nativeControl.RegisterRgbaImage(type, bitmap);
+    }
 }

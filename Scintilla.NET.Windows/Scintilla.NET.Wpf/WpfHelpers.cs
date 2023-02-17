@@ -24,19 +24,14 @@ SOFTWARE.
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Media.Imaging;
 using Color = System.Windows.Media.Color;
 
-namespace ScintillaNet.EtoForms.Wpf;
+namespace ScintillaNet.Wpf;
 public static class WpfHelpers
 {
-    public static int ColorToRgba(this Color value)
+    public static int ColorToRgba(Color value)
     {
         var r = value.R;
         var g = value.G << 8;
@@ -69,4 +64,33 @@ public static class WpfHelpers
             return new Bitmap(bitmap);
         }
     }
+
+    public static byte[] BitmapToArgb(Bitmap image)
+    {
+        // This code originally used Image.LockBits and some fast byte copying, however, the endianness
+        // of the image formats was making my brain hurt. For now I'm going to use the slow but simple
+        // GetPixel approach.
+
+        var bytes = new byte[4 * image.Width * image.Height];
+
+        var i = 0;
+        for (var y = 0; y < image.Height; y++)
+        {
+            for (var x = 0; x < image.Width; x++)
+            {
+                var color = image.GetPixel(x, y);
+                bytes[i++] = color.R;
+                bytes[i++] = color.G;
+                bytes[i++] = color.B;
+                bytes[i++] = color.A;
+            }
+        }
+
+        return bytes;
+    }
+
+    public static Color FromWinForms(System.Drawing.Color color) => Color.FromArgb(color.A, color.R, color.G, color.B);
+
+    public static System.Drawing.Color ToWinForms(Color color) =>
+        System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
 }
