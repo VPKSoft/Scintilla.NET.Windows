@@ -5,16 +5,52 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scintilla.NET.WinForms", "Scintilla.NET.Windows\Scintilla.NET.WinForms\Scintilla.NET.WinForms.csproj", "{4C2EB4EB-A622-4AC1-864F-3E3EAD0E769F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scintilla.NET.Wpf", "Scintilla.NET.Windows\Scintilla.NET.Wpf\Scintilla.NET.Wpf.csproj", "{AD76989C-8D1D-4243-86C7-9B2014D730D5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "Scintilla.NET.Windows\TestApp\TestApp.csproj", "{29377C75-1C14-4E26-ACD1-DBFF2E24843B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAppWpf", "TestAppWpf\TestAppWpf.csproj", "{0DFAD0C5-E376-41BA-AFAD-8DB4110D2BFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		DebugLinux|Any CPU = DebugLinux|Any CPU
 		Release|Any CPU = Release|Any CPU
+		ReleaseLinux|Any CPU = ReleaseLinux|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4C2EB4EB-A622-4AC1-864F-3E3EAD0E769F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C2EB4EB-A622-4AC1-864F-3E3EAD0E769F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C2EB4EB-A622-4AC1-864F-3E3EAD0E769F}.DebugLinux|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C2EB4EB-A622-4AC1-864F-3E3EAD0E769F}.DebugLinux|Any CPU.Build.0 = Debug|Any CPU
 		{4C2EB4EB-A622-4AC1-864F-3E3EAD0E769F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C2EB4EB-A622-4AC1-864F-3E3EAD0E769F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C2EB4EB-A622-4AC1-864F-3E3EAD0E769F}.ReleaseLinux|Any CPU.ActiveCfg = Release|Any CPU
+		{4C2EB4EB-A622-4AC1-864F-3E3EAD0E769F}.ReleaseLinux|Any CPU.Build.0 = Release|Any CPU
+		{AD76989C-8D1D-4243-86C7-9B2014D730D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD76989C-8D1D-4243-86C7-9B2014D730D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD76989C-8D1D-4243-86C7-9B2014D730D5}.DebugLinux|Any CPU.ActiveCfg = DebugLinux|Any CPU
+		{AD76989C-8D1D-4243-86C7-9B2014D730D5}.DebugLinux|Any CPU.Build.0 = DebugLinux|Any CPU
+		{AD76989C-8D1D-4243-86C7-9B2014D730D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD76989C-8D1D-4243-86C7-9B2014D730D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD76989C-8D1D-4243-86C7-9B2014D730D5}.ReleaseLinux|Any CPU.ActiveCfg = ReleaseLinux|Any CPU
+		{AD76989C-8D1D-4243-86C7-9B2014D730D5}.ReleaseLinux|Any CPU.Build.0 = ReleaseLinux|Any CPU
+		{29377C75-1C14-4E26-ACD1-DBFF2E24843B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29377C75-1C14-4E26-ACD1-DBFF2E24843B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29377C75-1C14-4E26-ACD1-DBFF2E24843B}.DebugLinux|Any CPU.ActiveCfg = Debug|Any CPU
+		{29377C75-1C14-4E26-ACD1-DBFF2E24843B}.DebugLinux|Any CPU.Build.0 = Debug|Any CPU
+		{29377C75-1C14-4E26-ACD1-DBFF2E24843B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29377C75-1C14-4E26-ACD1-DBFF2E24843B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29377C75-1C14-4E26-ACD1-DBFF2E24843B}.ReleaseLinux|Any CPU.ActiveCfg = Release|Any CPU
+		{29377C75-1C14-4E26-ACD1-DBFF2E24843B}.ReleaseLinux|Any CPU.Build.0 = Release|Any CPU
+		{0DFAD0C5-E376-41BA-AFAD-8DB4110D2BFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DFAD0C5-E376-41BA-AFAD-8DB4110D2BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DFAD0C5-E376-41BA-AFAD-8DB4110D2BFE}.DebugLinux|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DFAD0C5-E376-41BA-AFAD-8DB4110D2BFE}.DebugLinux|Any CPU.Build.0 = Debug|Any CPU
+		{0DFAD0C5-E376-41BA-AFAD-8DB4110D2BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DFAD0C5-E376-41BA-AFAD-8DB4110D2BFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DFAD0C5-E376-41BA-AFAD-8DB4110D2BFE}.ReleaseLinux|Any CPU.ActiveCfg = Release|Any CPU
+		{0DFAD0C5-E376-41BA-AFAD-8DB4110D2BFE}.ReleaseLinux|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

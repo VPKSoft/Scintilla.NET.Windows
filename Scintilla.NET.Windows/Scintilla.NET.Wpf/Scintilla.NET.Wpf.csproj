@@ -2,27 +2,47 @@
 	<PropertyGroup>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<DocumentationFile>bin\$(Configuration)\Scintilla.NET.EtoForms.Wpf.xml</DocumentationFile>
+		<DocumentationFile>bin\$(Configuration)\Scintilla.NET.Wpf.xml</DocumentationFile>
 		<OutputType>Library</OutputType>
-		<Title>Scintilla.NET.EtoForms</Title>
+		<Title>Scintilla.NET.Wpf</Title>
 		<Company>VPKSoft</Company>
-		<Description>Eto.Forms wrapper for Scintilla control.</Description>
+		<Description>WPF wrapper for Scintilla control.</Description>
 		<Copyright>Copyright © VPKSoft 2023</Copyright>
 		<BuildPlatform>Windows</BuildPlatform>
-		<PackageProjectUrl>https://github.com/VPKSoft/ScintillaNET</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/VPKSoft/ScintillaNET</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/VPKSoft/Scintilla.NET.Windows</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/VPKSoft/Scintilla.NET.Windows</RepositoryUrl>
 		<LangVersion>latest</LangVersion>
 		<TargetFrameworks>net6.0-windows;net7.0-windows</TargetFrameworks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Configurations>Debug;Release;DebugLinux;ReleaseLinux</Configurations>
-		<RootNamespace>ScintillaNet.EtoForms.Wpf</RootNamespace>
+		<RootNamespace>ScintillaNet.Wpf</RootNamespace>
+		<Version>1.0.0.5320</Version>
+		<PackageIcon>vpksoft_logo.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReleaseNotes>See: https://github.com/VPKSoft/Scintilla.NET.Windows</PackageReleaseNotes>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<UseWPF>True</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<PackageTags>scintilla;wpf;control;wrapper</PackageTags>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Include="..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\vpksoft_logo.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>		
 
 	<ItemGroup>
-		<PackageReference Include="Eto.Platform.Wpf" Version="2.7.3" />
-	</ItemGroup>
+		<PackageReference Include="Scintilla.NET.Abstractions" Version="1.0.2" />
+		<PackageReference Include="Scintilla.NET.WinForms" Version="1.0.1.5320" />
+	</ItemGroup>		
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Scintilla.NET.EtoForms.WinForms\Scintilla.NET.EtoForms.WinForms.csproj" />
+	  <Folder Include="EventArguments\" />
 	</ItemGroup>
 </Project>
