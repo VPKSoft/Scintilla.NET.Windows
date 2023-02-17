@@ -40,9 +40,5 @@
 	<ItemGroup>
 		<PackageReference Include="Scintilla.NET.Abstractions" Version="1.0.2" />
 		<PackageReference Include="Scintilla.NET.WinForms" Version="1.0.1.5320" />
-	</ItemGroup>		
-
-	<ItemGroup>
-	  <Folder Include="EventArguments\" />
 	</ItemGroup>
 </Project>

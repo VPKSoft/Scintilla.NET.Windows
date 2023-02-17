@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Scintilla.NET.Windows\Scintilla.NET.Wpf\Scintilla.NET.Wpf.csproj" />
+    <PackageReference Include="Scintilla.NET.Wpf" Version="1.0.0.5320" />
   </ItemGroup>
 
 </Project>

@@ -1,24 +1,32 @@
+﻿using System;
 using System.Globalization;
-using ScintillaNet.Abstractions.Classes.Lexers;
+using System.Windows;
+using System.Windows.Media;
 using ScintillaNet.Abstractions.Classes;
+using ScintillaNet.Abstractions.Classes.Lexers;
 using ScintillaNet.Abstractions.Enumerations;
-using ScintillaNet.WinForms;
 
-namespace TestApp;
-
-
-public partial class FormMain : Form
+namespace TestAppWpf;
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    private readonly Scintilla scintilla;
-
-    public FormMain()
+    public MainWindow()
     {
         InitializeComponent();
-        scintilla = new Scintilla { Dock = DockStyle.Fill, };
-
-        Controls.Add(scintilla);
     }
 
+    private bool shown;
+
+    private void MainWindow_OnContentRendered(object? sender, EventArgs e)
+    {
+        if (IsVisible && !shown)
+        {
+            shown = true;
+            CreateCsStyling();
+        }
+    }
 
     private void CreateCsStyling()
     {
@@ -101,8 +109,8 @@ public partial class FormMain : Form
         // Set colors for all folding markers
         for (int i = 25; i <= 31; i++)
         {
-            scintilla.Markers[i].SetForeColor(Color.LightGray);
-            scintilla.Markers[i].SetBackColor(Color.DarkGray);
+            scintilla.Markers[i].SetForeColor(Colors.LightGray);
+            scintilla.Markers[i].SetBackColor(Colors.DarkGray);
         }
 
         // Configure folding markers with respective symbols
@@ -116,10 +124,5 @@ public partial class FormMain : Form
 
         // Enable automatic folding
         scintilla.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
-    }
-
-    private void FormMain_Shown(object sender, EventArgs e)
-    {
-        CreateCsStyling();
     }
 }
