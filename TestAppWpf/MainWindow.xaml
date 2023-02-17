@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:TestAppWpf"
         xmlns:wpf="clr-namespace:ScintillaNet.Wpf;assembly=Scintilla.NET.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        ContentRendered="MainWindow_OnContentRendered"
+>
     <Grid>
         <wpf:Scintilla  Name="scintilla"/>
     </Grid>
