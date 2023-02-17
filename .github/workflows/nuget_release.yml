@@ -19,7 +19,8 @@ jobs:
     env:
       Solution_Name: Scintilla.NET.Windows.sln
       App_Project_Directory: Scintilla.NET.Windows                        
-      App_Project_Path: Scintilla.NET.Windows\Scintilla.NET.WinForms\Scintilla.NET.WinForms.csproj
+      App_Project_Path1: Scintilla.NET.Windows\Scintilla.NET.WinForms\Scintilla.NET.WinForms.csproj
+      App_Project_Path2: Scintilla.NET.Windows\Scintilla.NET.Wpf\Scintilla.NET.Wpf.csproj
       NUGET_APIKEY: ${{ secrets.NUGET_APIKEY }}
       NUGETAPI: ${{ secrets.NUGETAPI }}      
       GH_PACKAGES_APIKEY: ${{ secrets.GH_PACKAGES_APIKEY }}
@@ -49,8 +50,11 @@ jobs:
         Configuration: ${{ matrix.configuration }}
 
     # Create the app package by building and packaging the Windows Application Packaging project
-    - name: Create the app NuGet package
-      run: msbuild $env:App_Project_Path /p:Configuration=$env:Configuration
+    - name: Create the app NuGet package (WinForms)
+      run: msbuild $env:App_Project_Path1 /p:Configuration=$env:Configuration
+      
+    - name: Create the app NuGet package (Wpf)
+      run: msbuild $env:App_Project_Path2 /p:Configuration=$env:Configuration
 
     - name: Decode nuget.config
       if: ${{ github.event_name != 'pull_request' }}
@@ -64,7 +68,7 @@ jobs:
       if: ${{ github.event_name != 'pull_request' }}
       run: |
         $currentDirectory = Get-Location
-        $files = Get-ChildItem $currentDirectory -r -Filter *Scintilla.NET.W*.nupkg # use the mask to discard possible third party packages..
+        $files = Get-ChildItem $currentDirectory -r -Filter *Scintilla.NET.W*.nupkg # use the mask to discard possible third party packages.
 
         Write-Output $files.Count
 
