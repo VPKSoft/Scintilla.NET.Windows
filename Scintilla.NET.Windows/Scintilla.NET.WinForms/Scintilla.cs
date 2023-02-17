@@ -1394,7 +1394,7 @@ public class Scintilla : Control, IScintillaWinForms
         {
             case SCN_INDICATORCLICK:
                 var keys = Keys.Modifiers & (Keys)(scn.modifiers << 16);
-                OnIndicatorClick(new IndicatorClickEventArgs(this, keys));
+                OnIndicatorClick(new IndicatorClickEventArgs<Keys>(this, keys));
                 break;
 
             case SCN_INDICATORRELEASE:
@@ -1406,7 +1406,7 @@ public class Scintilla : Control, IScintillaWinForms
     private void ScnMarginClick(ref SCNotification scn)
     {
         var keys = Keys.Modifiers & (Keys)(scn.modifiers << 16);
-        var eventArgs = new MarginClickEventArgs(this, Lines, keys, scn.position.ToInt32(), scn.margin);
+        var eventArgs = new MarginClickEventArgs<Keys>(this, Lines, keys, scn.position.ToInt32(), scn.margin);
 
         if (scn.nmhdr.code == SCN_MARGINCLICK)
         {
@@ -4283,7 +4283,7 @@ public class Scintilla : Control, IScintillaWinForms
     /// </summary>
     [Category("Notifications")]
     [Description("Occurs when the user clicks text with an indicator.")]
-    public event EventHandler<IndicatorClickEventArgs> IndicatorClick
+    public event EventHandler<IndicatorClickEventArgs<Keys>> IndicatorClick
     {
         add => Events.AddHandler(indicatorClickEventKey, value);
         remove => Events.RemoveHandler(indicatorClickEventKey, value);
@@ -4328,7 +4328,7 @@ public class Scintilla : Control, IScintillaWinForms
     /// <remarks>The <see cref="IScintillaMargin{TColor}.Sensitive" /> property must be set for a margin to raise this event.</remarks>
     [Category("Notifications")]
     [Description("Occurs when the mouse is clicked in a sensitive margin.")]
-    public event EventHandler<MarginClickEventArgs> MarginClick
+    public event EventHandler<MarginClickEventArgs<Keys>> MarginClick
     {
         add => Events.AddHandler(marginClickEventKey, value);
         remove => Events.RemoveHandler(marginClickEventKey, value);
@@ -4343,7 +4343,7 @@ public class Scintilla : Control, IScintillaWinForms
     /// <seealso cref="UsePopup(PopupMode)" />
     [Category("Notifications")]
     [Description("Occurs when the mouse is right-clicked in a sensitive margin.")]
-    public event EventHandler<MarginClickEventArgs> MarginRightClick
+    public event EventHandler<MarginClickEventArgs<Keys>> MarginRightClick
     {
         add => Events.AddHandler(marginRightClickEventKey, value);
         remove => Events.RemoveHandler(marginRightClickEventKey, value);
@@ -4735,9 +4735,9 @@ public class Scintilla : Control, IScintillaWinForms
     /// Raises the <see cref="IndicatorClick" /> event.
     /// </summary>
     /// <param name="e">An <see cref="IndicatorClickEventArgs" /> that contains the event data.</param>
-    protected virtual void OnIndicatorClick(IndicatorClickEventArgs e)
+    protected virtual void OnIndicatorClick(IndicatorClickEventArgs<Keys> e)
     {
-        if (Events[indicatorClickEventKey] is EventHandler<IndicatorClickEventArgs> handler)
+        if (Events[indicatorClickEventKey] is EventHandler<IndicatorClickEventArgs<Keys>> handler)
         {
             handler(this, e);
         }
@@ -4783,9 +4783,9 @@ public class Scintilla : Control, IScintillaWinForms
     /// Raises the <see cref="MarginClick" /> event.
     /// </summary>
     /// <param name="e">A <see cref="MarginClickEventArgs" /> that contains the event data.</param>
-    protected virtual void OnMarginClick(MarginClickEventArgs e)
+    protected virtual void OnMarginClick(MarginClickEventArgs<Keys> e)
     {
-        if (Events[marginClickEventKey] is EventHandler<MarginClickEventArgs> handler)
+        if (Events[marginClickEventKey] is EventHandler<MarginClickEventArgs<Keys>> handler)
         {
             handler(this, e);
         }
@@ -4795,9 +4795,9 @@ public class Scintilla : Control, IScintillaWinForms
     /// Raises the <see cref="MarginRightClick" /> event.
     /// </summary>
     /// <param name="e">A <see cref="MarginClickEventArgs" /> that contains the event data.</param>
-    protected virtual void OnMarginRightClick(MarginClickEventArgs e)
+    protected virtual void OnMarginRightClick(MarginClickEventArgs<Keys> e)
     {
-        if (Events[marginRightClickEventKey] is EventHandler<MarginClickEventArgs> handler)
+        if (Events[marginRightClickEventKey] is EventHandler<MarginClickEventArgs<Keys>> handler)
         {
             handler(this, e);
         }

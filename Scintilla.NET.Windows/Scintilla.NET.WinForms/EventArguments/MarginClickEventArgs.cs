@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms;
+﻿using System;
 using ScintillaNet.Abstractions;
 using ScintillaNet.Abstractions.EventArguments;
 using ScintillaNet.Abstractions.Interfaces.Collections;
@@ -8,10 +8,11 @@ namespace ScintillaNet.WinForms.EventArguments;
 /// <summary>
 /// Provides data for the <see cref="Scintilla.MarginClick" /> event.
 /// </summary>
-public class MarginClickEventArgs : MarginClickEventArgsBase<Keys>
+public class MarginClickEventArgs<TKeys> : MarginClickEventArgsBase<TKeys>
+    where TKeys : Enum
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="MarginClickEventArgs" /> class.
+    /// Initializes a new instance of the <see cref="MarginClickEventArgs{TKeys}" /> class.
     /// </summary>
     /// <param name="scintilla">The <see cref="Scintilla" /> control that generated this event.</param>
     /// <param name="lineCollectionGeneral">A reference to Scintilla's line collection.</param>
@@ -21,7 +22,7 @@ public class MarginClickEventArgs : MarginClickEventArgsBase<Keys>
     public MarginClickEventArgs(
         IScintillaApi scintilla, 
         IScintillaLineCollectionGeneral lineCollectionGeneral,
-        Keys modifiers, 
+        TKeys modifiers, 
         int bytePosition, 
         int margin) : base(scintilla, lineCollectionGeneral, modifiers, bytePosition, margin)
     {
