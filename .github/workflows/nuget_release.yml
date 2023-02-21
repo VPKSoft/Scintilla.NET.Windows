@@ -1,9 +1,8 @@
 name: .NET NuGet Release
 
 on:
-  create:
-    tags:
-    - 'v*'
+  release:
+    types: created
     
 jobs:
 
