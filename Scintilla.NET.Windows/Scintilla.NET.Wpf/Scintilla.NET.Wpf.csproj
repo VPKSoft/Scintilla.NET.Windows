@@ -15,7 +15,7 @@
 		<TargetFrameworks>net6.0-windows;net7.0-windows</TargetFrameworks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<RootNamespace>ScintillaNet.Wpf</RootNamespace>
-		<Version>1.0.0.5320</Version>
+		<Version>1.0.3.5320</Version>
 		<PackageIcon>vpksoft_logo.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageReleaseNotes>See: https://github.com/VPKSoft/Scintilla.NET.Windows</PackageReleaseNotes>
