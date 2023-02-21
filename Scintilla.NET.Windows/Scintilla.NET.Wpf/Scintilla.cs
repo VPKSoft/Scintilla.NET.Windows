@@ -652,7 +652,7 @@ public class Scintilla: WindowsFormsHost,
             void NativeControlOnHotspotClick(object? sender, HotspotClickEventArgs<Keys> e)
             {
                 var key = KeyInterop.KeyFromVirtualKey((int)e.Modifiers);
-                value(nativeControl, new HotspotClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.Position));
+                value(nativeControl, new HotspotClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.BytePosition));
             }
 
             if (value != null)
@@ -685,7 +685,7 @@ public class Scintilla: WindowsFormsHost,
             void NativeControlOnHotspotClick(object? sender, HotspotClickEventArgs<Keys> e)
             {
                 var key = KeyInterop.KeyFromVirtualKey((int)e.Modifiers);
-                value(nativeControl, new HotspotClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.Position));
+                value(nativeControl, new HotspotClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.BytePosition));
             }
 
             if (value != null)
@@ -717,7 +717,7 @@ public class Scintilla: WindowsFormsHost,
             void Handler(object? sender, HotspotClickEventArgs<Keys> e)
             {
                 var key = KeyInterop.KeyFromVirtualKey((int)e.Modifiers);
-                value(nativeControl, new HotspotClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.Position));
+                value(nativeControl, new HotspotClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.BytePosition));
             }
 
             if (value != null)
@@ -807,7 +807,7 @@ public class Scintilla: WindowsFormsHost,
             {
                 var key = KeyInterop.KeyFromVirtualKey((int)e.Modifiers);
                 value(nativeControl,
-                    new MarginClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.Position,
+                    new MarginClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.BytePosition,
                         e.Margin));
             }
 
@@ -846,7 +846,7 @@ public class Scintilla: WindowsFormsHost,
             {
                 var key = KeyInterop.KeyFromVirtualKey((int)e.Modifiers);
                 value(nativeControl,
-                    new MarginClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.Position,
+                    new MarginClickEventArgs<Key>(nativeControl, e.LineCollectionGeneral, key, e.BytePosition,
                         e.Margin));
             }
 
