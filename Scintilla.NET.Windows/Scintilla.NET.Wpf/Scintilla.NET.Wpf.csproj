@@ -38,7 +38,7 @@
 	</ItemGroup>		
 
 	<ItemGroup>
-		<PackageReference Include="Scintilla.NET.Abstractions" Version="1.0.3" />
-		<PackageReference Include="Scintilla.NET.WinForms" Version="1.0.3.5320" />
+		<PackageReference Include="Scintilla.NET.Abstractions" Version="1.0.8" />
+		<PackageReference Include="Scintilla.NET.WinForms" Version="1.0.4.5320" />
 	</ItemGroup>
 </Project>
