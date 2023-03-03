@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Scintilla.NET.WinForms\Scintilla.NET.WinForms.csproj" />
+	  <PackageReference Include="Scintilla.NET.WinForms" Version="1.0.11.5320" />
   </ItemGroup>
 
 </Project>

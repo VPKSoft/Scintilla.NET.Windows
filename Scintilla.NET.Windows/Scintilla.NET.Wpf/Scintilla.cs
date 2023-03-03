@@ -3,6 +3,7 @@ using System.Windows.Forms.Integration;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using ScintillaNet.Abstractions;
+using ScintillaNet.Abstractions.Classes;
 using ScintillaNet.Abstractions.Enumerations;
 using ScintillaNet.Abstractions.Interfaces;
 using ScintillaNet.Abstractions.Interfaces.Methods;
@@ -1382,6 +1383,9 @@ public class Scintilla: WindowsFormsHost,
 
     /// <inheritdoc />
     public int Zoom { get => nativeControl.Zoom; set => nativeControl.Zoom = value; }
+
+    /// <inheritdoc />
+    public StyleCollectionPrimitive StylesPrimitive => nativeControl.StylesPrimitive;
 
     /// <inheritdoc />
     public void AssignCmdKey(Key keyDefinition, Command sciCommand)

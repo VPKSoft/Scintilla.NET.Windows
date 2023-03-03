@@ -15,7 +15,7 @@
 		<TargetFrameworks>net6.0-windows;net7.0-windows</TargetFrameworks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<RootNamespace>ScintillaNet.Wpf</RootNamespace>
-		<Version>1.0.3.5320</Version>
+		<Version>1.0.11.5320</Version>
 		<PackageIcon>vpksoft_logo.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageReleaseNotes>See: https://github.com/VPKSoft/Scintilla.NET.Windows</PackageReleaseNotes>
@@ -38,7 +38,7 @@
 	</ItemGroup>		
 
 	<ItemGroup>
-		<PackageReference Include="Scintilla.NET.Abstractions" Version="1.0.8" />
-		<PackageReference Include="Scintilla.NET.WinForms" Version="1.0.8.5320" />
+		<PackageReference Include="Scintilla.NET.Abstractions" Version="1.0.11" />
+		<PackageReference Include="Scintilla.NET.WinForms" Version="1.0.11.5320" />
 	</ItemGroup>
 </Project>
