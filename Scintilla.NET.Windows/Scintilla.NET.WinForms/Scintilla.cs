@@ -126,6 +126,9 @@ public class Scintilla : Control, IScintillaWinForms
 
     // For highlight calculations
     private string lastCallTip = string.Empty;
+
+    // Cross-platform styles.
+    private StyleCollectionPrimitive stylesPrimitive;
     #endregion Fields
 
     #region Methods
@@ -435,7 +438,7 @@ public class Scintilla : Control, IScintillaWinForms
     /// Makes the specified key definition do nothing.
     /// </summary>
     /// <param name="keyDefinition">The key combination to bind.</param>
-    /// <remarks>This is equivalent to binding the keys to <see cref="Command.Null" />.</remarks>
+    /// <remarks>This is equivalent to binding the keys to <see cref="ScintillaNet.Abstractions.Enumerations.Command.Null" />.</remarks>
     public void ClearCmdKey(Keys keyDefinition)
     {
         this.ClearCmdKeyExtension(keyDefinition, Helpers.TranslateKeys);
@@ -3762,6 +3765,19 @@ public class Scintilla : Control, IScintillaWinForms
 
         set => this.ZoomSet(value);
     }
+
+    /// <inheritdoc />
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public StyleCollectionPrimitive StylesPrimitive
+    {
+        get
+        {
+            stylesPrimitive ??= new StyleCollectionPrimitive(this);
+            return stylesPrimitive;
+        }
+    }
+
     #endregion
 
     #region PropertiesCustom
@@ -4246,7 +4262,7 @@ public class Scintilla : Control, IScintillaWinForms
     }
 
     /// <summary>
-    /// Occurs when the user clicks on text that is in a style with the <see cref="IScintillaStyle{TColor}.Hotspot" /> property set.
+    /// Occurs when the user clicks on text that is in a style with the <see cref="IScintillaStyle.Hotspot" /> property set.
     /// </summary>
     [Category("Notifications")]
     [Description("Occurs when the user clicks text styled with the hotspot flag.")]
@@ -4257,7 +4273,7 @@ public class Scintilla : Control, IScintillaWinForms
     }
 
     /// <summary>
-    /// Occurs when the user double clicks on text that is in a style with the <see cref="IScintillaStyle{TColor}.Hotspot" /> property set.
+    /// Occurs when the user double clicks on text that is in a style with the <see cref="IScintillaStyle.Hotspot" /> property set.
     /// </summary>
     [Category("Notifications")]
     [Description("Occurs when the user double clicks text styled with the hotspot flag.")]
@@ -4268,7 +4284,7 @@ public class Scintilla : Control, IScintillaWinForms
     }
 
     /// <summary>
-    /// Occurs when the user releases a click on text that is in a style with the <see cref="IScintillaStyle{TColor}.Hotspot" /> property set.
+    /// Occurs when the user releases a click on text that is in a style with the <see cref="IScintillaStyle.Hotspot" /> property set.
     /// </summary>
     [Category("Notifications")]
     [Description("Occurs when the user releases a click on text styled with the hotspot flag.")]
@@ -4734,7 +4750,7 @@ public class Scintilla : Control, IScintillaWinForms
     /// <summary>
     /// Raises the <see cref="IndicatorClick" /> event.
     /// </summary>
-    /// <param name="e">An <see cref="IndicatorClickEventArgs" /> that contains the event data.</param>
+    /// <param name="e">An <see cref="IndicatorClickEventArgs{TKeys}" /> that contains the event data.</param>
     protected virtual void OnIndicatorClick(IndicatorClickEventArgs<Keys> e)
     {
         if (Events[indicatorClickEventKey] is EventHandler<IndicatorClickEventArgs<Keys>> handler)
@@ -4782,7 +4798,7 @@ public class Scintilla : Control, IScintillaWinForms
     /// <summary>
     /// Raises the <see cref="MarginClick" /> event.
     /// </summary>
-    /// <param name="e">A <see cref="MarginClickEventArgs" /> that contains the event data.</param>
+    /// <param name="e">A <see cref="MarginClickEventArgs{TKeys}" /> that contains the event data.</param>
     protected virtual void OnMarginClick(MarginClickEventArgs<Keys> e)
     {
         if (Events[marginClickEventKey] is EventHandler<MarginClickEventArgs<Keys>> handler)
@@ -4794,7 +4810,7 @@ public class Scintilla : Control, IScintillaWinForms
     /// <summary>
     /// Raises the <see cref="MarginRightClick" /> event.
     /// </summary>
-    /// <param name="e">A <see cref="MarginClickEventArgs" /> that contains the event data.</param>
+    /// <param name="e">A <see cref="MarginClickEventArgs{TKeys}" /> that contains the event data.</param>
     protected virtual void OnMarginRightClick(MarginClickEventArgs<Keys> e)
     {
         if (Events[marginRightClickEventKey] is EventHandler<MarginClickEventArgs<Keys>> handler)
