@@ -14,7 +14,7 @@
 		<PackageReleaseNotes>See: https://github.com/VPKSoft/Scintilla.NET.Windows</PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-		<Version>1.0.8.5320</Version>
+		<Version>1.0.11.5320</Version>
 		<DocumentationFile>bin\$(Configuration)\Scintilla.NET.xml</DocumentationFile>
 		<UseWindowsForms>true</UseWindowsForms>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -63,6 +63,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Scintilla.NET.Abstractions" Version="1.0.8" />
+	  <PackageReference Include="Scintilla.NET.Abstractions" Version="1.0.11" />
 	</ItemGroup>
 </Project>

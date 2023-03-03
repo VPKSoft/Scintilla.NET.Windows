@@ -29,8 +29,17 @@ using System.Windows.Media.Imaging;
 using Color = System.Windows.Media.Color;
 
 namespace ScintillaNet.Wpf;
+
+/// <summary>
+/// Helper methods for Scintilla WPF interaction.
+/// </summary>
 public static class WpfHelpers
 {
+    /// <summary>
+    /// Converts the specified <see cref="Color"/> into RGBA integer value.
+    /// </summary>
+    /// <param name="value">The value to convert.</param>
+    /// <returns>The converted RGBA integer value.</returns>
     public static int ColorToRgba(Color value)
     {
         var r = value.R;
@@ -40,6 +49,11 @@ public static class WpfHelpers
         return intColor;
     }
 
+    /// <summary>
+    /// Converts the specified RGBA integer value into a <see cref="Color"/>
+    /// </summary>
+    /// <param name="value">The value to convert.</param>
+    /// <returns>A color converted from the RGBA integer value.</returns>
     public static Color FromIntColor(int value)
     {
         var a = (byte)((value >> 24) & 0xFF); // Opacity
@@ -50,21 +64,29 @@ public static class WpfHelpers
         return Color.FromArgb(a, r, g, b);
     }
 
+    /// <summary>
+    /// Converts a <see cref="BitmapImage"/> into a <see cref="Bitmap"/>.
+    /// </summary>
+    /// <param name="bitmapImage">The bitmap image to convert.</param>
+    /// <returns>The converted bitmap.</returns>
     public static Bitmap BitmapImage2Bitmap(BitmapImage bitmapImage)
     {
         // BitmapImage bitmapImage = new BitmapImage(new Uri("../Images/test.png", UriKind.Relative));
 
-        using(MemoryStream outStream = new MemoryStream())
-        {
-            BitmapEncoder enc = new BmpBitmapEncoder();
-            enc.Frames.Add(BitmapFrame.Create(bitmapImage));
-            enc.Save(outStream);
-            System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(outStream);
+        using var outStream = new MemoryStream();
+        BitmapEncoder enc = new BmpBitmapEncoder();
+        enc.Frames.Add(BitmapFrame.Create(bitmapImage));
+        enc.Save(outStream);
+        var bitmap = new Bitmap(outStream);
 
-            return new Bitmap(bitmap);
-        }
+        return new Bitmap(bitmap);
     }
 
+    /// <summary>
+    /// Converts a <see cref="Bitmap"/> into a ARGB byte array.
+    /// </summary>
+    /// <param name="image">The bitmap image to convert.</param>
+    /// <returns>The bitmap converted into ARGB <see cref="byte"/>[] array.</returns>
     public static byte[] BitmapToArgb(Bitmap image)
     {
         // This code originally used Image.LockBits and some fast byte copying, however, the endianness
@@ -89,8 +111,18 @@ public static class WpfHelpers
         return bytes;
     }
 
+    /// <summary>
+    /// Converts a WinForms <see cref="System.Drawing.Color"/> into a WPF <see cref="Color"/>
+    /// </summary>
+    /// <param name="color">The color to convert.</param>
+    /// <returns>The resulting converted <see cref="Color"/> value.</returns>
     public static Color FromWinForms(System.Drawing.Color color) => Color.FromArgb(color.A, color.R, color.G, color.B);
 
+    /// <summary>
+    /// Converts a WPF <see cref="Color"/> into a WinForms <see cref="System.Drawing.Color"/>.
+    /// </summary>
+    /// <param name="color">The color to convert.</param>
+    /// <returns>The resulting converted <see cref="Color"/> value.</returns>
     public static System.Drawing.Color ToWinForms(Color color) =>
         System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
 }

@@ -76,9 +76,6 @@ public class Lexilla: ILexilla
     [DllImport("Lexilla.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
     private static extern void GetLexerName(nuint index, IntPtr name, IntPtr bufferLength);
 
-    [DllImport("Lexilla.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
-    public static extern string LexerNameFromId(IntPtr identifier);
-
     /// <summary>
     /// Gets the lexer names contained in the Lexilla library.
     /// </summary>

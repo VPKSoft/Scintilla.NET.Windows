@@ -39,7 +39,7 @@ public class AutoCSelectionChangeEventArgs : AutoCSelectionChangeEventArgsBase
     /// <summary>
     /// Initializes a new instance of the <see cref="AutoCSelectionChangeEventArgs" /> class.
     /// </summary>
-    /// <param name="scintilla">The <see cref="scintilla" /> control that generated this event.</param>
+    /// <param name="scintilla">The <see cref="IScintillaApi" /> control that generated this event.</param>
     /// <param name="lineCollectionGeneral">A reference to Scintilla's line collection.</param>/// 
     /// <param name="text">A pointer to the selected auto-completion text.</param>
     /// <param name="bytePosition">The zero-based byte position within the document where the list was displayed.</param>

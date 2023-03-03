@@ -11,7 +11,7 @@ public class IndicatorClickEventArgs<TKeys> : IndicatorClickEventArgsBase<TKeys>
     where TKeys : Enum
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="IndicatorClickEventArgs" /> class.
+    /// Initializes a new instance of the <see cref="IndicatorClickEventArgs{TKeys}" /> class.
     /// </summary>
     /// <param name="scintilla">The <see cref="Scintilla" /> control that generated this event.</param>
     /// <param name="modifiers">The modifier keys that where held down at the time of the click.</param>
